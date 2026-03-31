@@ -1,59 +1,374 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Isla Nuts — Próximamente</title>
-  <meta name="description" content="La Isla Nuts — Frutos secos tostados artesanalmente en Tenerife. Nuestra tienda online llega pronto.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Barlow+Condensed:wght@200;300;500;700&display=swap" rel="stylesheet">
-  <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%}
-    body{font-family:'Barlow',sans-serif;font-weight:300;background-color:#1C2A22;color:#EFEBE3;min-height:100vh;overflow:hidden}
-    .page{display:flex;min-height:100vh}
-    .left{flex:1;display:flex;flex-direction:column;justify-content:center;padding:4rem 3.5rem;position:relative;z-index:2}
-    .right{flex:1;position:relative;overflow:hidden}
-    .right::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(155,94,58,.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(155,94,58,.1) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(239,235,227,.03) 0%,transparent 70%)}
-    .right::after{content:'';position:absolute;inset:0;opacity:.06;background-image:radial-gradient(circle at 25% 25%,#EFEBE3 1px,transparent 1px),radial-gradient(circle at 75% 75%,#EFEBE3 .5px,transparent .5px);background-size:60px 60px,40px 40px}
-    .accent-line{position:absolute;left:0;top:15%;bottom:15%;width:1px;background:linear-gradient(to bottom,transparent,#9B5E3A 30%,#9B5E3A 70%,transparent);z-index:2}
-    .logo{margin-bottom:3rem}
-    .logo-isla{font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:3.2rem;text-transform:uppercase;letter-spacing:.1em;padding-left:.1em;line-height:1;color:#EFEBE3}
-    .logo-nuts{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:2rem;text-transform:uppercase;letter-spacing:.38em;padding-left:.38em;margin-top:.3rem;line-height:1;color:#9B5E3A}
-    .divider{width:48px;height:1px;background-color:#9B5E3A;margin-bottom:2.5rem;animation:divider-grow 1.2s ease-out .4s both}
-    @keyframes divider-grow{from{width:0;opacity:0}to{width:48px;opacity:1}}
-    h1{font-family:'Barlow Condensed',sans-serif;font-weight:200;font-size:2.6rem;text-transform:uppercase;letter-spacing:.15em;padding-left:.15em;margin-bottom:1.2rem;color:#EFEBE3;animation:fade-up .8s ease-out .2s both}
-    .description{font-size:1rem;line-height:1.8;color:#EFEBE3;opacity:.55;max-width:380px;animation:fade-up .8s ease-out .4s both}
-    @keyframes fade-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-    .contact{margin-top:3rem;animation:fade-up .8s ease-out .6s both}
-    .contact a{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:.8rem;text-transform:uppercase;letter-spacing:.2em;padding-left:.2em;color:#9B5E3A;text-decoration:none;padding-bottom:4px;border-bottom:1px solid rgba(155,94,58,.3);transition:border-color .3s ease,color .3s ease}
-    .contact a:hover{border-bottom-color:#9B5E3A;color:#c4855e}
-    .origin{margin-top:4rem;font-family:'Barlow',sans-serif;font-weight:300;font-size:.72rem;text-transform:uppercase;letter-spacing:.25em;padding-left:.25em;color:#EFEBE3;opacity:.25;animation:fade-up .8s ease-out .8s both}
-    footer{position:fixed;bottom:2rem;left:3.5rem;font-size:.72rem;color:#EFEBE3;opacity:.2;letter-spacing:.03em;z-index:10}
-    @media(max-width:768px){.page{flex-direction:column}.right{position:absolute;inset:0;z-index:0}.left{min-height:100vh;padding:3rem 2rem;background:rgba(28,42,34,.88);backdrop-filter:blur(2px)}.accent-line{display:none}.logo-isla{font-size:2.6rem}.logo-nuts{font-size:1.6rem}h1{font-size:1.25rem}footer{left:2rem}}
-    @media(max-width:380px){.left{padding:2.5rem 1.5rem}.logo-isla{font-size:2rem}.logo-nuts{font-size:1.3rem}footer{left:1.5rem}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Isla Nuts — Próximamente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@200;300;400;500&family=Barlow+Condensed:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green-deep: #111D16;
+    --green-mid: #162119;
+    --green-soft: #1A2A1F;
+    --copper: #9B5E3A;
+    --copper-light: #B0724E;
+    --cream: #EFEBE3;
+    --cream-soft: #D8D0C4;
+    --text-muted: #7A7568;
+    --text-dim: #5A5548;
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--green-deep);
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(155,94,58,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 80%, rgba(155,94,58,0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 60px 24px;
+  }
+
+  .line-top {
+    position: relative;
+    width: 1px;
+    height: 64px;
+    background: linear-gradient(to bottom, transparent, var(--copper), transparent);
+    margin-bottom: 40px;
+    animation: lineGrow 1.2s ease-out both;
+    transform-origin: top;
+  }
+  .line-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(155,94,58,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .brand {
+    text-align: center;
+    margin-bottom: 8px;
+    animation: fadeUp 1.4s ease-out 0.3s both;
+  }
+  .brand-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    font-size: clamp(2.8rem, 6vw, 3.8rem);
+    letter-spacing: 0.1em;
+    color: var(--cream);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .brand-nuts {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    letter-spacing: 0.38em;
+    color: var(--copper);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .brand-sub {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 16px;
+    animation: fadeUp 1.4s ease-out 0.5s both;
+  }
+
+  .divider-small {
+    width: 48px;
+    height: 1px;
+    background: var(--copper);
+    opacity: 0.4;
+    margin: 32px 0;
+    animation: fadeUp 1.4s ease-out 0.6s both;
+  }
+
+  .coming-soon {
+    text-align: center;
+    animation: fadeUp 1.6s ease-out 0.7s both;
+  }
+  .coming-soon h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200;
+    font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+    letter-spacing: 0.15em;
+    color: var(--cream-soft);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .coming-soon .slogan {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 200;
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: var(--cream-soft);
+    max-width: 440px;
+    margin: 0 auto;
+    letter-spacing: 0.02em;
+  }
+
+  .features {
+    display: flex;
+    gap: 52px;
+    margin-top: 48px;
+    animation: fadeUp 1.8s ease-out 0.9s both;
+  }
+  .feature {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .feature-icon {
+    width: 26px;
+    height: 26px;
+    opacity: 0.55;
+  }
+  .feature-icon svg { width: 100%; height: 100%; }
+  .feature span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 48px 0 44px;
+    animation: fadeUp 2s ease-out 1.1s both;
+  }
+  .divider-line {
+    width: 44px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--copper), transparent);
+  }
+  .divider-diamond {
+    width: 5px;
+    height: 5px;
+    border: 1px solid var(--copper);
+    transform: rotate(45deg);
+    opacity: 0.6;
+  }
+
+  .newsletter {
+    text-align: center;
+    animation: fadeUp 2s ease-out 1.2s both;
+  }
+  .newsletter label {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .newsletter-form {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .newsletter-form input[type="email"] {
+    flex: 1;
+    background: transparent;
+    border: 1px solid rgba(155,94,58,0.3);
+    border-right: none;
+    padding: 13px 18px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+    outline: none;
+    transition: border-color 0.4s ease;
+  }
+  .newsletter-form input[type="email"]::placeholder {
+    color: var(--text-dim);
+  }
+  .newsletter-form input[type="email"]:focus {
+    border-color: var(--copper);
+  }
+  .newsletter-form button {
+    background: transparent;
+    border: 1px solid rgba(155,94,58,0.3);
+    padding: 13px 22px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--copper);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    white-space: nowrap;
+  }
+  .newsletter-form button:hover {
+    background: var(--copper);
+    color: var(--green-deep);
+    border-color: var(--copper);
+  }
+
+  .line-bottom {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, var(--copper), transparent);
+    margin: 48px 0 28px;
+    animation: fadeUp 2.2s ease-out 1.4s both;
+  }
+
+  .footer {
+    text-align: center;
+    animation: fadeUp 2.2s ease-out 1.5s both;
+  }
+  .footer .location {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 400;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .footer .copy {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    opacity: 0.5;
+    margin-top: 8px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes lineGrow {
+    from { opacity: 0; transform: scaleY(0); }
+    to { opacity: 1; transform: scaleY(1); }
+  }
+
+  @media (max-width: 600px) {
+    .features { flex-direction: column; gap: 24px; align-items: center; }
+    .newsletter-form { flex-direction: column; }
+    .newsletter-form input[type="email"] {
+      border-right: 1px solid rgba(155,94,58,0.3);
+      border-bottom: none;
+      text-align: center;
+    }
+    .newsletter-form button { width: 100%; border-top: none; }
+  }
+</style>
 </head>
 <body>
-  <div class="page">
-    <div class="left">
-      <div class="logo">
-        <div class="logo-isla">La Isla</div>
-        <div class="logo-nuts">Nuts</div>
+
+<div class="wrapper">
+  <div class="line-top"></div>
+  <div class="brand">
+    <div class="brand-name">La Isla</div>
+    <div class="brand-nuts">Nuts</div>
+  </div>
+  <div class="divider-small"></div>
+  <div class="coming-soon">
+    <h1>Próximamente</h1>
+    <p class="slogan">
+      Preparamos una experiencia para los sentidos.
+      Frutos secos de origen seleccionado, tostados con el cuidado
+      que merece cada pieza. Pronto en tu mesa.
+    </p>
+  </div>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 3C8 3 4 7.5 4 13s4 10 9 10 9-4.5 9-10S18 3 13 3z" stroke="#9B5E3A" stroke-width="0.7"/>
+          <path d="M13 5v16M5 13h16" stroke="#9B5E3A" stroke-width="0.4" opacity="0.5"/>
+          <circle cx="13" cy="13" r="4" stroke="#9B5E3A" stroke-width="0.5" opacity="0.4"/>
+        </svg>
       </div>
-      <div class="divider"></div>
-      <h1>Estamos preparando algo especial</h1>
-      <p class="description">Frutos secos tostados artesanalmente en Tenerife. Nuestra tienda online llega muy pronto.</p>
-      <div class="contact">
-        <a href="mailto:online@laislanuts.com">Escríbenos</a>
-      </div>
-      <div class="origin">Tenerife, Islas Canarias</div>
+      <span>Origen Seleccionado</span>
     </div>
-    <div class="right">
-      <div class="accent-line"></div>
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 20s0-5 5-10c5 5 5 10 5 10" stroke="#9B5E3A" stroke-width="0.7" stroke-linecap="round"/>
+          <path d="M13 12v10" stroke="#9B5E3A" stroke-width="0.5"/>
+          <circle cx="13" cy="8" r="2" stroke="#9B5E3A" stroke-width="0.5" opacity="0.4"/>
+        </svg>
+      </div>
+      <span>Calidad Artesanal</span>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 19s2-7 7-11c5 4 7 11 7 11" stroke="#9B5E3A" stroke-width="0.7" stroke-linecap="round"/>
+          <path d="M13 11v11" stroke="#9B5E3A" stroke-width="0.5"/>
+          <path d="M9 16c2-1 4-1 4-1s2 0 4 1" stroke="#9B5E3A" stroke-width="0.4" opacity="0.4"/>
+        </svg>
+      </div>
+      <span>Agricultura Sostenible</span>
     </div>
   </div>
-  <footer>&copy; 2026 La Isla Nuts</footer>
+  <div class="divider">
+    <span class="divider-line"></span>
+    <span class="divider-diamond"></span>
+    <span class="divider-line"></span>
+  </div>
+  <div class="newsletter">
+    <label>Sé el primero en descubrirlo</label>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=\'color:#9B5E3A;font-size:0.8rem;letter-spacing:0.08em;padding:13px;font-family:Barlow,sans-serif;\'>Gracias. Te avisaremos.</p>';">
+      <input type="email" placeholder="Tu correo electrónico" required>
+      <button type="submit">Suscribirme</button>
+    </form>
+  </div>
+  <div class="line-bottom"></div>
+  <div class="footer">
+    <p class="location">Tenerife, Islas Canarias</p>
+    <p class="copy">&copy; 2026 La Isla Nuts</p>
+  </div>
+</div>
+
 </body>
 </html>
