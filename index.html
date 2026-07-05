@@ -322,21 +322,39 @@
   </div>
   <div class="newsletter">
     <label>Sé el primero en descubrirlo</label>
-    <form class="newsletter-form" action="https://formsubmit.co/ana@laislanuts.com" method="POST">
-      <input type="hidden" name="_subject" value="Nueva suscripción - La Isla Nuts">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="https://laislanuts.com/?gracias=1">
-      <input type="hidden" name="_template" value="table">
-      <input type="email" name="email" placeholder="Tu correo electrónico" required>
+    <form class="newsletter-form" id="newsletter-form">
+      <input type="email" name="email" placeholder="Tu correo electrónico" required aria-label="Tu correo electrónico">
       <button type="submit">Suscribirme</button>
     </form>
     <p class="gracias" style="display:none;color:#9B5E3A;font-size:0.8rem;letter-spacing:0.08em;padding:13px;font-family:Barlow,sans-serif;">Gracias. Te avisaremos.</p>
   </div>
   <script>
-    if(window.location.search.includes('gracias=1')){
-      document.querySelector('.newsletter-form').style.display='none';
-      document.querySelector('.gracias').style.display='block';
-    }
+    (function () {
+      var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxDTChPl7GThWJxn_EoY4mpDqBUFZ5c2WMNxuyArnR11FXF6_oXH26ImVSdVYX1hJsVdQ/exec';
+      var form = document.getElementById('newsletter-form');
+      var gracias = document.querySelector('.gracias');
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var input = form.querySelector('input[name="email"]');
+        var email = input.value.trim();
+        if (!email) return;
+        var btn = form.querySelector('button');
+        btn.disabled = true;
+        btn.textContent = 'Enviando...';
+        var body = new URLSearchParams();
+        body.append('email', email);
+        fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: body })
+          .then(function () {
+            form.style.display = 'none';
+            gracias.style.display = 'block';
+          })
+          .catch(function () {
+            btn.disabled = false;
+            btn.textContent = 'Suscribirme';
+            alert('Hubo un problema al enviar. Inténtalo de nuevo.');
+          });
+      });
+    })();
   </script>
   <div class="line-bottom"></div>
   <div class="footer">
