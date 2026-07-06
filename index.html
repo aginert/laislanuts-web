@@ -181,15 +181,15 @@
   }
   .newsletter-form {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 12px;
     max-width: 400px;
     margin: 0 auto;
   }
-  .newsletter-form input[type="email"] {
-    flex: 1;
+  .newsletter-form .nl-text {
+    width: 100%;
     background: transparent;
     border: 1px solid rgba(155,94,58,0.3);
-    border-right: none;
     padding: 13px 18px;
     font-family: 'Barlow', sans-serif;
     font-size: 0.78rem;
@@ -197,10 +197,13 @@
     letter-spacing: 0.04em;
     color: var(--cream);
     outline: none;
+    text-align: center;
     transition: border-color 0.4s ease;
   }
-  .newsletter-form input[type="email"]::placeholder { color: var(--text-dim); }
-  .newsletter-form input[type="email"]:focus { border-color: var(--copper); }
+  .newsletter-form .nl-text::placeholder { color: var(--text-dim); }
+  .newsletter-form .nl-text:focus { border-color: var(--copper); }
+  .newsletter-form .nl-row { display: flex; align-items: center; }
+  .newsletter-form .nl-row .nl-text { flex: 1; border-right: none; text-align: left; }
   .newsletter-form button {
     background: transparent;
     border: 1px solid rgba(155,94,58,0.3);
@@ -220,6 +223,24 @@
     color: var(--green-deep);
     border-color: var(--copper);
   }
+  .newsletter-form button:disabled { opacity: 0.5; cursor: default; }
+  .nl-consent {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 8px;
+    text-align: left;
+    margin: 4px 0 0 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    font-family: 'Barlow', sans-serif !important;
+    font-size: 0.72rem !important;
+    font-weight: 300 !important;
+    color: var(--cream-soft) !important;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .nl-consent input { margin-top: 3px; accent-color: var(--copper); flex-shrink: 0; }
+  .nl-consent a { color: var(--copper); }
   .line-bottom {
     width: 1px;
     height: 36px;
@@ -247,6 +268,15 @@
     opacity: 0.5;
     margin-top: 8px;
   }
+  .footer .legal {
+    margin-top: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .footer .legal a { color: var(--text-muted); text-decoration: none; margin: 0 8px; transition: color 0.3s; }
+  .footer .legal a:hover { color: var(--copper); }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: translateY(0); }
@@ -257,13 +287,13 @@
   }
   @media (max-width: 600px) {
     .features { flex-direction: column; gap: 24px; align-items: center; }
-    .newsletter-form { flex-direction: column; }
-    .newsletter-form input[type="email"] {
+    .newsletter-form .nl-row { flex-direction: column; }
+    .newsletter-form .nl-row .nl-text {
       border-right: 1px solid rgba(155,94,58,0.3);
       border-bottom: none;
       text-align: center;
     }
-    .newsletter-form button { width: 100%; border-top: none; }
+    .newsletter-form .nl-row button { width: 100%; border-top: none; }
   }
 </style>
 </head>
@@ -323,8 +353,15 @@
   <div class="newsletter">
     <label>Sé el primero en descubrirlo</label>
     <form class="newsletter-form" id="newsletter-form">
-      <input type="email" name="email" placeholder="Tu correo electrónico" required aria-label="Tu correo electrónico">
-      <button type="submit">Suscribirme</button>
+      <input type="text" name="nombre" class="nl-text" placeholder="Tu nombre (opcional)" aria-label="Tu nombre">
+      <div class="nl-row">
+        <input type="email" name="email" class="nl-text" placeholder="Tu correo electrónico" required aria-label="Tu correo electrónico">
+        <button type="submit">Suscribirme</button>
+      </div>
+      <label class="nl-consent">
+        <input type="checkbox" name="consent" required>
+        <span>He leído y acepto la <a href="/privacidad.html" target="_blank" rel="noopener">política de privacidad</a>.</span>
+      </label>
     </form>
     <p class="gracias" style="display:none;color:#9B5E3A;font-size:0.8rem;letter-spacing:0.08em;padding:13px;font-family:Barlow,sans-serif;">Gracias. Te avisaremos.</p>
   </div>
@@ -335,14 +372,20 @@
       var gracias = document.querySelector('.gracias');
       form.addEventListener('submit', function (ev) {
         ev.preventDefault();
-        var input = form.querySelector('input[name="email"]');
-        var email = input.value.trim();
+        var email = form.querySelector('input[name="email"]').value.trim();
+        var nombre = form.querySelector('input[name="nombre"]').value.trim();
+        var consent = form.querySelector('input[name="consent"]').checked;
         if (!email) return;
+        if (!consent) { alert('Debes aceptar la política de privacidad para suscribirte.'); return; }
         var btn = form.querySelector('button');
         btn.disabled = true;
         btn.textContent = 'Enviando...';
+        var origen = document.referrer || (window.location.search ? window.location.search.slice(1) : 'directo');
         var body = new URLSearchParams();
         body.append('email', email);
+        body.append('nombre', nombre);
+        body.append('consentimiento', 'Sí — política de privacidad');
+        body.append('origen', origen);
         fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: body })
           .then(function () {
             form.style.display = 'none';
@@ -360,6 +403,7 @@
   <div class="footer">
     <p class="location">Tenerife, Islas Canarias</p>
     <p class="copy">&copy; 2026 La Isla Nuts</p>
+    <p class="legal"><a href="/aviso-legal.html">Aviso Legal</a> · <a href="/privacidad.html">Política de Privacidad</a></p>
   </div>
 </div>
 </body>
