@@ -4,367 +4,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Isla Nuts — Próximamente</title>
+<meta name="description" content="La Isla Nuts — frutos secos de origen seleccionado, tostados artesanalmente en Tenerife. Muy pronto. Suscríbete para enterarte del lanzamiento.">
+<meta property="og:title" content="La Isla Nuts — Próximamente">
+<meta property="og:description" content="Frutos secos de origen seleccionado, tostados artesanalmente en Tenerife. Muy pronto.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://laislanuts.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23EFEBE3' stroke='%239B5E3A' stroke-width='2'/%3E%3Ctext x='16' y='21' font-family='Georgia,serif' font-size='11' letter-spacing='0.5' text-anchor='middle' fill='%2317241C'%3ELN%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@200;300;400;500&family=Barlow+Condensed:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;1,300&family=Barlow+Condensed:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --green-deep: #17241C;
-    --green-mid: #1D2E24;
-    --green-soft: #223629;
-    --copper: #9B5E3A;
-    --copper-light: #B0724E;
-    --cream: #EFEBE3;
-    --cream-soft: #D8D0C4;
-    --text-muted: #7A7568;
-    --text-dim: #5A5548;
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  :root{--cream:#EFEBE3;--green:#17241C;--green-soft:#3B4A40;--copper:#9B5E3A;--muted:#7A7568;--line:#D9D1C4;}
+  html,body{height:100%;}
+  body{height:100dvh;overflow:hidden;background:
+      radial-gradient(ellipse at 50% 6%,rgba(155,94,58,0.08) 0%,transparent 55%),var(--cream);
+    color:var(--green);font-family:'Barlow',sans-serif;font-weight:300;display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased;}
+  .stage{text-align:center;padding:22px;display:flex;flex-direction:column;align-items:center;max-width:560px;}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:var(--copper);color:var(--cream);
+    padding:7px 17px;border-radius:100px;font-family:'Barlow Condensed',sans-serif;font-weight:500;
+    font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;animation:fade .8s .1s both;margin-bottom:14px;}
+  .chip .dot{width:5px;height:5px;border-radius:50%;background:var(--cream);animation:blink 2s infinite;}
+  .emblem{position:relative;animation:pop 1.1s cubic-bezier(.2,.8,.2,1) both;}
+  .emblem::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:64%;height:64%;border-radius:50%;background:radial-gradient(circle,rgba(155,94,58,0.12) 0%,transparent 70%);}
+  .emblem svg{position:relative;width:clamp(190px,32vh,260px);height:clamp(190px,32vh,260px);display:block;}
+  .emblem .rot{transform-origin:center;animation:spin 55s linear infinite;}
+  .slogan{font-style:italic;font-size:clamp(0.95rem,1.9vw,1.1rem);line-height:1.6;color:var(--green-soft);max-width:400px;margin:16px 0 2px;animation:fade 1s .5s both;}
+  form{margin-top:16px;width:100%;max-width:410px;display:flex;flex-direction:column;gap:10px;animation:fade 1s .65s both;}
+  .nl-text{width:100%;background:#fff;border:1px solid var(--line);padding:13px 18px;font-family:'Barlow',sans-serif;font-size:0.85rem;color:var(--green);outline:none;text-align:center;transition:border-color .3s;}
+  .nl-text::placeholder{color:var(--muted);}
+  .nl-text:focus{border-color:var(--copper);}
+  .row{display:flex;box-shadow:0 6px 22px rgba(23,36,28,0.06);}
+  .row .nl-text{flex:1;border-right:none;text-align:left;box-shadow:none;}
+  button{background:var(--copper);border:1px solid var(--copper);color:var(--cream);padding:13px 24px;font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:background .3s;white-space:nowrap;}
+  button:hover{background:var(--green);border-color:var(--green);}
+  button:disabled{opacity:.5;cursor:default;}
+  .consent{display:flex;align-items:center;gap:8px;justify-content:center;font-size:0.68rem;color:var(--muted);line-height:1.4;}
+  .consent input{accent-color:var(--copper);flex-shrink:0;}
+  .consent a{color:var(--copper);}
+  .gracias{display:none;color:var(--copper);font-style:italic;padding:14px;font-size:1.05rem;animation:fade .6s both;}
+  .foot{position:fixed;bottom:16px;left:0;right:0;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+  .foot a{color:var(--muted);text-decoration:none;margin:0 6px;transition:color .3s;}
+  .foot a:hover{color:var(--copper);}
+  @keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes pop{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+  @media(max-width:600px){
+    body{height:auto;min-height:100dvh;overflow:auto;padding:6vh 0;}
+    .row{flex-direction:column;box-shadow:none;}
+    .row .nl-text{border-right:1px solid var(--line);text-align:center;}
   }
-  html { font-size: 16px; scroll-behavior: smooth; }
-  body {
-    background: var(--green-deep);
-    color: var(--cream);
-    font-family: 'Barlow', sans-serif;
-    font-weight: 300;
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-  }
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 30% 20%, rgba(155,94,58,0.04) 0%, transparent 50%),
-      radial-gradient(ellipse at 70% 80%, rgba(155,94,58,0.02) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .wrapper {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 60px 24px;
-  }
-  .line-top {
-    position: relative;
-    width: 1px;
-    height: 64px;
-    background: linear-gradient(to bottom, transparent, var(--copper), transparent);
-    margin-bottom: 40px;
-    animation: lineGrow 1.2s ease-out both;
-    transform-origin: top;
-  }
-  .line-top::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 100%;
-    background: radial-gradient(ellipse at center, rgba(155,94,58,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .brand {
-    text-align: center;
-    margin-bottom: 8px;
-    animation: fadeUp 1.4s ease-out 0.3s both;
-  }
-  .brand-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 300;
-    font-size: clamp(2.8rem, 6vw, 3.8rem);
-    letter-spacing: 0.1em;
-    color: var(--cream);
-    text-transform: uppercase;
-    line-height: 1;
-  }
-  .brand-nuts {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 500;
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    letter-spacing: 0.38em;
-    color: var(--copper);
-    text-transform: uppercase;
-    margin-top: 2px;
-  }
-  .divider-small {
-    width: 48px;
-    height: 1px;
-    background: var(--copper);
-    opacity: 0.4;
-    margin: 32px 0;
-    animation: fadeUp 1.4s ease-out 0.6s both;
-  }
-  .coming-soon {
-    text-align: center;
-    animation: fadeUp 1.6s ease-out 0.7s both;
-  }
-  .coming-soon h1 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 200;
-    font-size: clamp(0.85rem, 1.8vw, 1.1rem);
-    letter-spacing: 0.15em;
-    color: var(--cream-soft);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-  .coming-soon .slogan {
-    font-family: 'Barlow', sans-serif;
-    font-weight: 200;
-    font-size: 1.1rem;
-    line-height: 1.85;
-    color: var(--cream-soft);
-    max-width: 440px;
-    margin: 0 auto;
-    letter-spacing: 0.02em;
-  }
-  .features {
-    display: flex;
-    gap: 52px;
-    margin-top: 48px;
-    animation: fadeUp 1.8s ease-out 0.9s both;
-  }
-  .feature {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-  .feature-icon { width: 26px; height: 26px; opacity: 0.55; }
-  .feature-icon svg { width: 100%; height: 100%; }
-  .feature span {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin: 48px 0 44px;
-    animation: fadeUp 2s ease-out 1.1s both;
-  }
-  .divider-line {
-    width: 44px;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--copper), transparent);
-  }
-  .divider-diamond {
-    width: 5px;
-    height: 5px;
-    border: 1px solid var(--copper);
-    transform: rotate(45deg);
-    opacity: 0.6;
-  }
-  .newsletter {
-    text-align: center;
-    animation: fadeUp 2s ease-out 1.2s both;
-  }
-  .newsletter label {
-    display: block;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 16px;
-  }
-  .newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  .newsletter-form .nl-text {
-    width: 100%;
-    background: transparent;
-    border: 1px solid rgba(155,94,58,0.3);
-    padding: 13px 18px;
-    font-family: 'Barlow', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 300;
-    letter-spacing: 0.04em;
-    color: var(--cream);
-    outline: none;
-    text-align: center;
-    transition: border-color 0.4s ease;
-  }
-  .newsletter-form .nl-text::placeholder { color: var(--text-dim); }
-  .newsletter-form .nl-text:focus { border-color: var(--copper); }
-  .newsletter-form .nl-row { display: flex; align-items: center; }
-  .newsletter-form .nl-row .nl-text { flex: 1; border-right: none; text-align: left; }
-  .newsletter-form button {
-    background: transparent;
-    border: 1px solid rgba(155,94,58,0.3);
-    padding: 13px 22px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--copper);
-    cursor: pointer;
-    transition: all 0.4s ease;
-    white-space: nowrap;
-  }
-  .newsletter-form button:hover {
-    background: var(--copper);
-    color: var(--green-deep);
-    border-color: var(--copper);
-  }
-  .newsletter-form button:disabled { opacity: 0.5; cursor: default; }
-  .nl-consent {
-    display: flex !important;
-    align-items: flex-start;
-    gap: 8px;
-    text-align: left;
-    margin: 4px 0 0 !important;
-    letter-spacing: 0 !important;
-    text-transform: none !important;
-    font-family: 'Barlow', sans-serif !important;
-    font-size: 0.72rem !important;
-    font-weight: 300 !important;
-    color: var(--cream-soft) !important;
-    line-height: 1.5;
-    cursor: pointer;
-  }
-  .nl-consent input { margin-top: 3px; accent-color: var(--copper); flex-shrink: 0; }
-  .nl-consent a { color: var(--copper); }
-  .line-bottom {
-    width: 1px;
-    height: 36px;
-    background: linear-gradient(to bottom, var(--copper), transparent);
-    margin: 48px 0 28px;
-    animation: fadeUp 2.2s ease-out 1.4s both;
-  }
-  .footer {
-    text-align: center;
-    animation: fadeUp 2.2s ease-out 1.5s both;
-  }
-  .footer .location {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 400;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-  .footer .copy {
-    font-family: 'Barlow', sans-serif;
-    font-weight: 300;
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    opacity: 0.5;
-    margin-top: 8px;
-  }
-  .footer .legal {
-    margin-top: 12px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.62rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-  .footer .legal a { color: var(--text-muted); text-decoration: none; margin: 0 8px; transition: color 0.3s; }
-  .footer .legal a:hover { color: var(--copper); }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes lineGrow {
-    from { opacity: 0; transform: scaleY(0); }
-    to { opacity: 1; transform: scaleY(1); }
-  }
-  @media (max-width: 600px) {
-    .features { flex-direction: column; gap: 24px; align-items: center; }
-    .newsletter-form .nl-row { flex-direction: column; }
-    .newsletter-form .nl-row .nl-text {
-      border-right: 1px solid rgba(155,94,58,0.3);
-      border-bottom: none;
-      text-align: center;
-    }
-    .newsletter-form .nl-row button { width: 100%; border-top: none; }
-  }
+  @media(prefers-reduced-motion:reduce){.emblem .rot{animation:none;}.chip .dot{animation:none;}}
 </style>
 </head>
 <body>
-<div class="wrapper">
-  <div class="line-top"></div>
-  <div class="brand">
-    <div class="brand-name">La Isla</div>
-    <div class="brand-nuts">Nuts</div>
-  </div>
-  <div class="divider-small"></div>
-  <div class="coming-soon">
-    <h1>Próximamente</h1>
-    <p class="slogan">
-      Preparamos una experiencia para los sentidos.
-      Frutos secos de origen seleccionado, tostados con el cuidado
-      que merece cada pieza. Pronto en tu mesa.
-    </p>
-  </div>
-  <div class="features">
-    <div class="feature">
-      <div class="feature-icon">
-        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M13 3C8 3 4 7.5 4 13s4 10 9 10 9-4.5 9-10S18 3 13 3z" stroke="#9B5E3A" stroke-width="0.7"/>
-          <path d="M13 5v16M5 13h16" stroke="#9B5E3A" stroke-width="0.4" opacity="0.5"/>
-          <circle cx="13" cy="13" r="4" stroke="#9B5E3A" stroke-width="0.5" opacity="0.4"/>
-        </svg>
-      </div>
-      <span>Origen Seleccionado</span>
+  <div class="stage">
+    <div class="chip"><span class="dot"></span> Próximamente</div>
+    <div class="emblem">
+      <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="La Isla Nuts">
+        <circle cx="120" cy="120" r="112" stroke="#9B5E3A" stroke-width="1" opacity="0.55"/>
+        <circle cx="120" cy="120" r="103" stroke="#9B5E3A" stroke-width="0.5" opacity="0.28"/>
+        <g class="rot">
+          <path id="top" d="M 40,120 A 80,80 0 0,1 200,120" fill="none"/>
+          <path id="bot" d="M 200,120 A 80,80 0 0,1 40,120" fill="none"/>
+          <text font-family="Barlow Condensed, sans-serif" font-size="8" font-weight="400" letter-spacing="4.5" fill="#9B5E3A" opacity="0.4">
+            <textPath href="#top" startOffset="7%">TOSTADO ARTESANAL · ORIGEN SELECCIONADO</textPath>
+          </text>
+          <text font-family="Barlow Condensed, sans-serif" font-size="8" font-weight="400" letter-spacing="5.5" fill="#9B5E3A" opacity="0.4">
+            <textPath href="#bot" startOffset="26%">TENERIFE · CANARIAS</textPath>
+          </text>
+        </g>
+        <text x="120" y="114" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-size="31" font-weight="400" letter-spacing="4" fill="#17241C">LA ISLA</text>
+        <line x1="90" y1="127" x2="150" y2="127" stroke="#9B5E3A" stroke-width="0.9"/>
+        <text x="120" y="148" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-size="16" font-weight="500" letter-spacing="7" fill="#9B5E3A">NUTS</text>
+      </svg>
     </div>
-    <div class="feature">
-      <div class="feature-icon">
-        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 20s0-5 5-10c5 5 5 10 5 10" stroke="#9B5E3A" stroke-width="0.7" stroke-linecap="round"/>
-          <path d="M13 12v10" stroke="#9B5E3A" stroke-width="0.5"/>
-          <circle cx="13" cy="8" r="2" stroke="#9B5E3A" stroke-width="0.5" opacity="0.4"/>
-        </svg>
-      </div>
-      <span>Calidad Artesanal</span>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">
-        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 19s2-7 7-11c5 4 7 11 7 11" stroke="#9B5E3A" stroke-width="0.7" stroke-linecap="round"/>
-          <path d="M13 11v11" stroke="#9B5E3A" stroke-width="0.5"/>
-          <path d="M9 16c2-1 4-1 4-1s2 0 4 1" stroke="#9B5E3A" stroke-width="0.4" opacity="0.4"/>
-        </svg>
-      </div>
-      <span>Agricultura Sostenible</span>
-    </div>
-  </div>
-  <div class="divider">
-    <span class="divider-line"></span>
-    <span class="divider-diamond"></span>
-    <span class="divider-line"></span>
-  </div>
-  <div class="newsletter">
-    <label>Sé el primero en descubrirlo</label>
-    <form class="newsletter-form" id="newsletter-form">
+    <p class="slogan">Frutos secos de origen seleccionado, tostados con el cuidado que merece cada pieza.</p>
+    <form id="newsletter-form">
       <input type="text" name="nombre" class="nl-text" placeholder="Tu nombre (opcional)" aria-label="Tu nombre">
-      <div class="nl-row">
+      <div class="row">
         <input type="email" name="email" class="nl-text" placeholder="Tu correo electrónico" required aria-label="Tu correo electrónico">
-        <button type="submit">Suscribirme</button>
+        <button type="submit">Avísame</button>
       </div>
-      <label class="nl-consent">
-        <input type="checkbox" name="consent" required>
-        <span>He leído y acepto la <a href="/privacidad.html" target="_blank" rel="noopener">política de privacidad</a>.</span>
-      </label>
+      <label class="consent"><input type="checkbox" name="consent" required> Acepto la <a href="/privacidad.html" target="_blank" rel="noopener">política de privacidad</a></label>
     </form>
-    <p class="gracias" style="display:none;color:#9B5E3A;font-size:0.8rem;letter-spacing:0.08em;padding:13px;font-family:Barlow,sans-serif;">Gracias. Te avisaremos.</p>
+    <p class="gracias">Gracias. Te avisaremos.</p>
   </div>
+  <div class="foot"><a href="/aviso-legal.html">Aviso Legal</a> · <a href="/privacidad.html">Política de Privacidad</a> · &copy; 2026 La Isla Nuts</div>
   <script>
     (function () {
       var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0kUx2583AQZpAg6x0baSdlqjkCxz2MadqTEnPkVukGpeRdFsdlSVGh0vDbnXiOk97wg/exec';
@@ -387,24 +115,10 @@
         body.append('consentimiento', 'Sí — política de privacidad');
         body.append('origen', origen);
         fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: body })
-          .then(function () {
-            form.style.display = 'none';
-            gracias.style.display = 'block';
-          })
-          .catch(function () {
-            btn.disabled = false;
-            btn.textContent = 'Suscribirme';
-            alert('Hubo un problema al enviar. Inténtalo de nuevo.');
-          });
+          .then(function () { form.style.display = 'none'; gracias.style.display = 'block'; })
+          .catch(function () { btn.disabled = false; btn.textContent = 'Avísame'; alert('Hubo un problema al enviar. Inténtalo de nuevo.'); });
       });
     })();
   </script>
-  <div class="line-bottom"></div>
-  <div class="footer">
-    <p class="location">Tenerife, Islas Canarias</p>
-    <p class="copy">&copy; 2026 La Isla Nuts</p>
-    <p class="legal"><a href="/aviso-legal.html">Aviso Legal</a> · <a href="/privacidad.html">Política de Privacidad</a></p>
-  </div>
-</div>
 </body>
 </html>
