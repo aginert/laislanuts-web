@@ -54,6 +54,7 @@
     color: var(--crema); font-family: var(--sans); font-weight: 300; font-size: 1rem; padding: 0.55rem 0; outline: none;
     transition: border-color .3s;
   }
+  .trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .campo input::placeholder { color: #55625A; }
   .campo input:focus { border-bottom-color: var(--cobre-claro); }
   .acciones { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin-top: 1.8rem; flex-wrap: wrap; }
@@ -134,6 +135,7 @@
           <div class="campo"><label for="nombre">Nombre</label><input id="nombre" type="text" name="nombre" placeholder="Opcional" autocomplete="given-name"></div>
           <div class="campo"><label for="email">Correo electrónico</label><input id="email" type="email" name="email" placeholder="tu@correo.com" required autocomplete="email"></div>
         </div>
+        <div class="trampa" aria-hidden="true"><label for="web">No rellenes este campo</label><input id="web" type="text" name="web" tabindex="-1" autocomplete="off"></div>
         <div class="acciones">
           <label class="consent"><input type="checkbox" name="consent" required> Acepto la&nbsp;<a href="/privacidad.html" target="_blank" rel="noopener">política de privacidad</a></label>
           <button type="submit">Avísame</button>
@@ -181,6 +183,7 @@
 (function () {
   var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0kUx2583AQZpAg6x0baSdlqjkCxz2MadqTEnPkVukGpeRdFsdlSVGh0vDbnXiOk97wg/exec';
   var form = document.getElementById('newsletter-form');
+  var abierta = Date.now();
   var gracias = document.querySelector('.gracias');
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
@@ -198,6 +201,8 @@
     body.append('nombre', nombre);
     body.append('consentimiento', 'Sí — política de privacidad');
     body.append('origen', origen);
+    body.append('web', form.querySelector('input[name="web"]').value);
+    body.append('tiempo', String(Math.round((Date.now() - abierta) / 1000)));
     fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: body })
       .then(function () { form.style.display = 'none'; gracias.style.display = 'block'; })
       .catch(function () { btn.disabled = false; btn.textContent = 'Avísame'; alert('Hubo un problema al enviar. Inténtalo de nuevo.'); });
