@@ -104,3 +104,51 @@ function respuesta(datos) {
 function probarAviso() {
   avisar(SpreadsheetApp.openById(ID_HOJA), 'prueba@laislanuts.com', 'Prueba', 'editor', false);
 }
+
+/* ── Limpieza de la hoja (ejecutar a mano desde el editor) ───────────── */
+/**
+ * Deja en «Suscripciones» solo a las personas reales.
+ * Lo demás NO se borra: se mueve a «Descartados» con el motivo (Bot, Prueba o Comercial).
+ * También quita de «Spam» las filas de prueba.
+ */
+function limpiarHoja() {
+  var libro = SpreadsheetApp.openById(ID_HOJA);
+  var h = hoja(libro, HOJA);
+  var n = h.getLastRow();
+  if (n < 2) return;
+  var filas = h.getRange(2, 1, n - 1, 5).getValues();
+  var quedan = [], fuera = [];
+
+  filas.forEach(function (f) {
+    var email = String(f[1]).trim(), nombre = String(f[2]).trim();
+    var motivo = motivoDescarte(email, nombre);
+    if (motivo) fuera.push(f.concat([motivo])); else quedan.push(f);
+  });
+
+  if (fuera.length) {
+    var d = libro.getSheetByName('Descartados');
+    if (!d) {
+      d = libro.insertSheet('Descartados');
+      d.appendRow(['Fecha', 'Email', 'Nombre', 'Consentimiento', 'Origen', 'Motivo']);
+    }
+    d.getRange(d.getLastRow() + 1, 1, fuera.length, 6).setValues(fuera);
+  }
+  h.getRange(2, 1, n - 1, 5).clearContent();
+  if (quedan.length) h.getRange(2, 1, quedan.length, 5).setValues(quedan);
+
+  var spam = libro.getSheetByName(HOJA_SPAM);
+  if (spam && spam.getLastRow() > 1) {
+    for (var i = spam.getLastRow(); i >= 2; i--) {
+      if (String(spam.getRange(i, 5).getValue()).indexOf('prueba') === 0) spam.deleteRow(i);
+    }
+  }
+  Logger.log('Quedan ' + quedan.length + ' personas. Movidas a «Descartados»: ' + fuera.length + '.');
+}
+
+function motivoDescarte(email, nombre) {
+  var e = email.toLowerCase();
+  if (/@laislanuts\.com$/.test(e) || e === 'ana.ginert@gmail.com') return 'Prueba';
+  if (/@melottogroup\.com$/.test(e)) return 'Comercial';
+  if (esBot({}, email, nombre)) return 'Bot';
+  return '';
+}
