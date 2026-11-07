@@ -13,27 +13,39 @@ var HOJA = 'Suscripciones';
 var HOJA_SPAM = 'Spam';
 
 function doPost(e) {
+  try {
+    return recibir(e);
+  } catch (err) {
+    return respuesta({ result: 'error', message: err.toString() });
+  }
+}
+
+function recibir(e) {
   var p = (e && e.parameter) || {};
   var email = String(p.email || '').trim();
   var nombre = String(p.nombre || '').trim();
   var consentimiento = String(p.consentimiento || '').trim();
   var origen = String(p.origen || '').trim();
 
-  if (!email) return respuesta('sin email');
+  if (!email) return respuesta({ result: 'error', message: 'sin email' });
 
   var fila = [new Date(), email, nombre, consentimiento, origen];
   var libro = SpreadsheetApp.openById(ID_HOJA);
 
   if (esBot(p, email, nombre)) {
     hoja(libro, HOJA_SPAM).appendRow(fila);
-    return respuesta('ok');
+    return respuesta({ result: 'ok' });
   }
 
   var suscripciones = hoja(libro, HOJA);
   var repetido = yaEsta(suscripciones, email);
   suscripciones.appendRow(fila);
-  avisar(libro, email, nombre, origen, repetido);
-  return respuesta('ok');
+  try {
+    avisar(libro, email, nombre, origen, repetido);
+  } catch (err) {
+    // Si el correo falla, la suscripción ya está guardada igualmente.
+  }
+  return respuesta({ result: 'ok' });
 }
 
 /* ── Detección de bots ─────────────────────────────── */
@@ -83,8 +95,9 @@ function yaEsta(h, email) {
   return correos.some(function (fila) { return String(fila[0]).toLowerCase() === buscado; });
 }
 
-function respuesta(texto) {
-  return ContentService.createTextOutput(texto);
+function respuesta(datos) {
+  return ContentService.createTextOutput(JSON.stringify(datos))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 /** Ejecútala una vez a mano desde el editor para dar permiso de enviar correos y probar el aviso. */
